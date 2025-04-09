@@ -1,0 +1,31 @@
+services:
+  web:
+    image: odoo:18.0
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - /home/c/cc-odoo18/myaddons:/mnt/extra-addons
+      - /home/c/cc-odoo18/myaddons/cysbros:/mnt/extra-addons/cysbros
+      - /home/c/cc-odoo18/myaddons/oca-account-financial-tools-18.0:/mnt/extra-addons/oca-account-financial-tools-18.0
+      - /home/c/cc-odoo18/myaddons/oca-account-financial-reporting-18.0:/mnt/extra-addons/oca-account-financial-reporting-18.0
+      - /home/c/cc-odoo18/myaddons/oca-l10n-mexico-17.0:/mnt/extra-addons/oca-l10n-mexico-17.0
+      - /home/c/cc-odoo18/myaddons/oca-currency-18.0:/mnt/extra-addons/oca-currency-18.0
+      - /home/c/cc-odoo18/myaddons/server-ux-18.0:/mnt/extra-addons/server-ux-18.0
+      - /home/c/cc-odoo18/myaddons/reporting-engine-18.0:/mnt/extra-addons/reporting-engine-18.0
+      - /home/c/cc-odoo18/myaddons/mis-builder-17.0:/mnt/extra-addons/mis-builder-17.0
+
+      - /home/c/cc-odoo18/config:/etc/odoo
+    env_file: /home/c/conf/.env
+    restart: always
+  db:
+    image: postgres:15
+    env_file: /home/c/conf/.env
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+    restart: always
+volumes:
+  odoo-web-data:
+  odoo-db-data:
